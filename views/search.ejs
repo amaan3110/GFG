@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistics</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-blue-50 flex flex-col items-center py-10">
+    <div class="w-full max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg text-center">
+        <h1 class="text-3xl font-bold mb-4">Statistics - <%= month %> <span class="text-sm">(Selected month name from
+                    dropdown)</span></h1>
+        <div class="bg-yellow-200 p-6 rounded-lg">
+            <p class="text-xl font-semibold mb-2">Total sale <span class="block text-2xl">
+                    <%= totalSaleAmount.toFixed(2) %>
+                </span></p>
+            <p class="text-xl font-semibold mb-2">Total sold item <span class="block text-2xl">
+                    <%= totalSoldItems %>
+                </span></p>
+            <p class="text-xl font-semibold">Total not sold item <span class="block text-2xl">
+                    <%= totalNotSoldItems %>
+                </span></p>
+        </div>
+        <a href="/" class="mt-6 inline-block bg-yellow-500 text-white px-4 py-2 rounded-md">Back to Dashboard</a>
+    </div>
+</body>
+
+</html>

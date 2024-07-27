@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Transactions</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-blue-50 flex flex-col items-center py-10">
+    <div class="w-full max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg">
+        <h1 class="text-3xl font-bold text-center mb-8">Transaction Dashboard</h1>
+        <div class="flex justify-between mb-6">
+            <form action="/statistics" method="get" class="flex space-x-2">
+                <input type="text" id="search" name="search" placeholder="Search transaction"
+                    value="<%= query.search %>"
+                    class="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                <select id="month" name="month"
+                    class="px-2 py-1 text-sm border rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                    <option value="">Select Month</option>
+                    <option value="January">January</option>
+                    <option value="February">February</option>
+                    <option value="March">March</option>
+                    <option value="April">April</option>
+                    <option value="May">May</option>
+                    <option value="June">June</option>
+                    <option value="July">July</option>
+                    <option value="August">August</option>
+                    <option value="September">September</option>
+                    <option value="October">October</option>
+                    <option value="November">November</option>
+                    <option value="December">December</option>
+                </select>
+                <button type="submit" class="bg-yellow-500 text-white text-sm px-2 py-1 rounded-md">Search</button>
+            </form>
+            <form action="/bar-chart" method="get" class="flex space-x-2">
+                <select id="month" name="month"
+                    class="px-2 py-1 text-sm border rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                    <option value="">Select Month</option>
+                    <option value="January">January</option>
+                    <option value="February">February</option>
+                    <option value="March">March</option>
+                    <option value="April">April</option>
+                    <option value="May">May</option>
+                    <option value="June">June</option>
+                    <option value="July">July</option>
+                    <option value="August">August</option>
+                    <option value="September">September</option>
+                    <option value="October">October</option>
+                    <option value="November">November</option>
+                    <option value="December">December</option>
+                </select>
+                <button type="submit" class="bg-yellow-500 text-white text-sm px-2 py-1 rounded-md">BarChart</button>
+            </form>
+            <form action="/pie-chart" method="get" class="flex space-x-2">
+                <select id="month" name="month"
+                    class="px-2 py-1 text-sm border rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                    <option value="">Select Month</option>
+                    <option value="January">January</option>
+                    <option value="February">February</option>
+                    <option value="March">March</option>
+                    <option value="April">April</option>
+                    <option value="May">May</option>
+                    <option value="June">June</option>
+                    <option value="July">July</option>
+                    <option value="August">August</option>
+                    <option value="September">September</option>
+                    <option value="October">October</option>
+                    <option value="November">November</option>
+                    <option value="December">December</option>
+                </select>
+                <button type="submit" class="bg-yellow-500 text-white text-sm px-2 py-1 rounded-md">PieChart</button>
+            </form>
+        </div>
+        <% if (transactions && transactions.length) { %>
+            <table class="min-w-full bg-white">
+                <thead>
+                    <tr>
+                        <th class="py-2 px-4 border-b">ID</th>
+                        <th class="py-2 px-4 border-b">Title</th>
+                        <th class="py-2 px-4 border-b">Description</th>
+                        <th class="py-2 px-4 border-b">Price</th>
+                        <th class="py-2 px-4 border-b">Category</th>
+                        <th class="py-2 px-4 border-b">Sold</th>
+                        <th class="py-2 px-4 border-b">Image</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% transactions.forEach(transaction=> { %>
+                        <tr>
+                            <td class="py-2 px-4 border-b">
+                                <%= transaction.id %>
+                            </td>
+                            <td class="py-2 px-4 border-b">
+                                <%= transaction.title %>
+                            </td>
+                            <td class="py-2 px-4 border-b">
+                                <%= transaction.description %>
+                            </td>
+                            <td class="py-2 px-4 border-b">
+                                <%= transaction.price %>
+                            </td>
+                            <td class="py-2 px-4 border-b">
+                                <%= transaction.category %>
+                            </td>
+                            <td class="py-2 px-4 border-b">
+                                <%= transaction.sold ? 'Yes' : 'No' %>
+                            </td>
+                            <td class="py-2 px-4 border-b">
+                                <img src="<%= transaction.image %>" alt="<%= transaction.title %>"
+                                    class="h-10 w-10 object-cover">
+                            </td>
+                        </tr>
+                        <% }) %>
+                </tbody>
+            </table>
+            <div class="flex justify-between items-center mt-4">
+                <p class="text-sm">Page No: <%= page %>
+                </p>
+                <div>
+                    <a href="?page=1&perPage=<%= perPage %>"
+                        class="px-3 py-1 bg-yellow-500 text-white rounded-md">First</a>
+                    <% if (page> 1) { %>
+                        <a href="?page=<%= page - 1 %>&perPage=<%= perPage %>"
+                            class="px-3 py-1 bg-yellow-500 text-white rounded-md">Previous</a>
+                        <% } %>
+                            <% if (page < totalPages) { %>
+                                <a href="?page=<%= page + 1 %>&perPage=<%= perPage %>"
+                                    class="px-3 py-1 bg-yellow-500 text-white rounded-md">Next</a>
+                                <% } %>
+                                    <a href="?page=<%= totalPages %>&perPage=<%= perPage %>"
+                                        class="px-3 py-1 bg-yellow-500 text-white rounded-md">Last</a>
+                </div>
+                <p class="text-sm">Per Page: <%= perPage %>
+                </p>
+            </div>
+            <% } else { %>
+                <p class="text-center text-gray-500">No transactions found.</p>
+                <% } %>
+    </div>
+</body>
+
+</html>
